@@ -1,0 +1,47 @@
+parser: babel-eslint
+extends:
+  - airbnb
+  - plugin:import/errors
+  - plugin:import/warnings
+  - plugin:flowtype/recommended
+plugins:
+  - import
+  - flowtype
+parserOptions:
+  ecmaVersion: 8
+  sourceType: module
+  ecmaFeatures:
+    impliedStrict: true
+    experimentalObjectRestSpread: true
+rules:
+  semi:
+    - error
+    - always
+    - omitLastInOneLineBlock: true
+
+  flowtype/boolean-style:
+    - error
+    - boolean
+  flowtype/delimiter-dangle:
+    - error
+    - always-multiline
+  flowtype/generic-spacing:
+    - error
+    - never
+  flowtype/no-dupe-keys: error
+  flowtype/no-primitive-constructor-types: error
+  flowtype/no-weak-types:
+    - error
+    - any: false
+      Array: true
+      Object: true
+      Function: true
+  flowtype/object-type-delimiter:
+    - error
+    - comma
+  flowtype/space-before-type-colon:
+    - error
+    - never
+  flowtype/type-id-match:
+    - error
+    - ^([A-Z][a-z0-9]*)+Type$

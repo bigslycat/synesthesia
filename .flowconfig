@@ -1,0 +1,11 @@
+[ignore]
+<PROJECT_ROOT>/node_modules/.*
+<PROJECT_ROOT>/lib/.*
+
+[include]
+
+[libs]
+/flow-typed/npm
+
+[options]
+esproposal.class_instance_fields=enable

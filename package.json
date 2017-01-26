@@ -1,0 +1,62 @@
+{
+  "name": "synesthesia",
+  "version": "0.0.1",
+  "description": "Тестовое задание для Synesthesia",
+  "scripts": {
+    "test": "jest",
+    "build": "jabt",
+    "dev": "babel-node src/dev",
+    "deps-check": "npm-check",
+    "deps-update": "npm-check -u"
+  },
+  "dependencies": {
+    "babel-cli": "6.22.2",
+    "bluebird": "3.4.7",
+    "express": "4.14.0",
+    "jabt": "0.0.5",
+    "lodash": "4.17.4",
+    "material-ui": "0.16.7",
+    "react": "15.4.2",
+    "react-dom": "15.4.2",
+    "react-redux": "5.0.2",
+    "react-tap-event-plugin": "2.0.1",
+    "redux": "3.6.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "7.1.1",
+    "babel-plugin-syntax-flow": "6.18.0",
+    "babel-plugin-syntax-trailing-function-commas": "6.22.0",
+    "babel-plugin-transform-async-to-module-method": "6.22.0",
+    "babel-plugin-transform-class-properties": "6.22.0",
+    "babel-plugin-transform-do-expressions": "6.22.0",
+    "babel-plugin-transform-es2015-destructuring": "6.22.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "6.22.0",
+    "babel-plugin-transform-es2015-parameters": "6.22.0",
+    "babel-plugin-transform-exponentiation-operator": "6.22.0",
+    "babel-plugin-transform-export-extensions": "6.22.0",
+    "babel-plugin-transform-flow-strip-types": "6.22.0",
+    "babel-plugin-transform-function-bind": "6.22.0",
+    "babel-plugin-transform-object-rest-spread": "6.22.0",
+    "eslint": "3.14.1",
+    "eslint-config-airbnb": "14.0.0",
+    "eslint-plugin-flowtype": "2.30.0",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-jsx-a11y": "3.0.2",
+    "eslint-plugin-react": "6.9.0",
+    "flow-bin": "0.38.0",
+    "flow-typed": "2.0.0",
+    "husky": "0.13.1",
+    "jest": "18.1.0",
+    "npm-check": "5.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bigslycat/synesthesia.git"
+  },
+  "author": "Pavel Tereschenko <me@pavlik.pro> (https://github.com/bigslycat)",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/bigslycat/synesthesia/issues"
+  },
+  "homepage": "https://github.com/bigslycat/synesthesia#readme"
+}
