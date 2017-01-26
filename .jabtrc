@@ -1,6 +1,6 @@
 {
   "entry": "./src/front/index.js",
-  "path": "build",
+  "path": "./build",
   "filename": "bundle.js",
   "tplPath": "./src/front/template.pug"
 }
