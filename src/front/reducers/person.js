@@ -3,8 +3,15 @@ import { PERSON_UPDATE } from '../actions/personUpdate';
 import { PERSON_DELETE } from '../actions/personDelete';
 
 const getInitialState = () => ({
-  data: [],
-  idCounter: 0,
+  data: [{
+    id: 1,
+    fio: 'Павел Терещенко',
+    age: 29,
+    phone: '+7904*****63',
+    email: 'me@pavlik.pro',
+  }],
+
+  idCounter: 1,
 });
 
 const person = (
