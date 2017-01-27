@@ -1,5 +1,3 @@
-import remove from 'lodash/remove';
-
 import { PERSON_CREATE } from '../actions/personCreate';
 import { PERSON_UPDATE } from '../actions/personUpdate';
 import { PERSON_DELETE } from '../actions/personDelete';
@@ -39,11 +37,7 @@ const person = (
     case PERSON_DELETE: {
       return {
         ...state,
-
-        data: remove(
-          state.data,
-          user => user.id === id,
-        ),
+        data: state.data.filter(user => user.id !== id),
       };
     }
 
