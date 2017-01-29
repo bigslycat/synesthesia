@@ -7,10 +7,12 @@ import { app as appClass } from './styles.less';
 
 class App extends Component {
   static propTypes = {
-    ...Table.propTypes,
-    ...TableFillPanel.propTypes,
-    ...Toolbar.propTypes,
+    ...Table.contextTypes,
+    ...TableFillPanel.contextTypes,
+    ...Toolbar.contextTypes,
   };
+
+  static childContextTypes = { ...App.propTypes };
 
   constructor(...args) {
     super(...args);
@@ -19,20 +21,16 @@ class App extends Component {
     };
   }
 
-  render() {
-    const {
-      persons,
-      personCreate,
-      personDelete,
-      personUpdate,
-      personsListUpdate,
-    } = this.props;
+  getChildContext() {
+    return this.props;
+  }
 
+  render() {
     return (
       <div className={appClass}>
-        <Table {...{ persons, personDelete, personUpdate }} />
-        <TableFillPanel {...{ personCreate }} />
-        <Toolbar {...{ persons, personsListUpdate }} />
+        <Table />
+        <TableFillPanel />
+        <Toolbar />
       </div>
     );
   }

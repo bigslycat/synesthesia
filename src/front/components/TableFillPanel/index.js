@@ -20,7 +20,7 @@ const fieldParams = {
 };
 
 class TableFillPanel extends Component {
-  static propTypes = {
+  static contextTypes = {
     personCreate: PropTypes.func.isRequired,
   };
 
@@ -44,7 +44,7 @@ class TableFillPanel extends Component {
   }
 
   save() {
-    this.props.personCreate(this.state.fields);
+    this.context.personCreate(this.state.fields);
     this.setState(this.getInitialState());
   }
 

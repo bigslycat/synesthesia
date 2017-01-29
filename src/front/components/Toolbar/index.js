@@ -20,7 +20,7 @@ const personToString = person => Object.values(person)
   .join(',');
 
 class Toolbar extends Component {
-  static propTypes = {
+  static contextTypes = {
     personsListUpdate: PropTypes.func.isRequired,
     persons: PropTypes.arrayOf(
       PropTypes.shape({
@@ -43,8 +43,7 @@ class Toolbar extends Component {
     super(...args);
 
     this.state = {
-      mode: null,
-      json: JSON.stringify(this.props.persons.map(
+      json: JSON.stringify(this.context.persons.map(
         ({ fio, age, phone, email }) => ({ fio, age, phone, email }),
       ), null, ' '),
     };
@@ -57,14 +56,14 @@ class Toolbar extends Component {
 
     try {
       const persons = JSON.parse(json);
-      if (Array.isArray(persons)) this.props.personsListUpdate(persons);
+      if (Array.isArray(persons)) this.context.personsListUpdate(persons);
     } catch (err) {
       // nothing do
     }
   }
 
   getCsv() {
-    return this.props.persons.map(personToString).join('\n');
+    return this.context.persons.map(personToString).join('\n');
   }
 
   render() {

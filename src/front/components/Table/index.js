@@ -31,7 +31,7 @@ const overflow = { overflow: false };
 const background = { background: false };
 
 class TableComponent extends Component {
-  static propTypes = {
+  static contextTypes = {
     personDelete: PropTypes.func.isRequired,
     personUpdate: PropTypes.func.isRequired,
     persons: PropTypes.arrayOf(
@@ -62,7 +62,7 @@ class TableComponent extends Component {
   edit(index) {
     this.setState({
       ...this.state,
-      tempFields: this.props.persons[index],
+      tempFields: this.context.persons[index],
     });
   }
 
@@ -77,7 +77,7 @@ class TableComponent extends Component {
     const { tempFields } = this.state;
 
     this.cancel();
-    this.props.personUpdate(tempFields);
+    this.context.personUpdate(tempFields);
   }
 
   fieldOnChange(name, value) {
@@ -91,7 +91,7 @@ class TableComponent extends Component {
   }
 
   render() {
-    const { persons, personDelete } = this.props;
+    const { persons, personDelete } = this.context;
     const { tempFields } = this.state;
 
     const fieldOnChange = (name, value) =>
