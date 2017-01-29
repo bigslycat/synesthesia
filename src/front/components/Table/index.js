@@ -51,8 +51,8 @@ class TableComponent extends Component {
     ).isRequired,
   };
 
-  constructor(props) {
-    super(props);
+  constructor(...args) {
+    super(...args);
 
     this.state = {
       tempFields: {},
