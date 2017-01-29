@@ -2,7 +2,7 @@ import { createStore } from 'redux';
 
 import createRender from './helpers/createRender';
 import app from './reducers';
-import App from './components/App';
+import App from './containers/App';
 
 import './style.less';
 import './inject';
