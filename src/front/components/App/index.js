@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import Table from '../../containers/Table';
-import TableFillPanel from '../../containers/TableFillPanel';
-import Toolbar from '../../containers/Toolbar';
+import Table from '../Table';
+import TableFillPanel from '../TableFillPanel';
+import Toolbar from '../Toolbar';
 import { app as appClass } from './styles.less';
 
 class App extends Component {
