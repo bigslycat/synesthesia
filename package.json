@@ -4,7 +4,7 @@
   "description": "Тестовое задание для Synesthesia",
   "scripts": {
     "test": "jest",
-    "build": "jabt",
+    "build": "NODE_ENV=production jabt",
     "dev": "babel-node src/dev",
     "deps-check": "npm-check",
     "deps-update": "npm-check -u"
