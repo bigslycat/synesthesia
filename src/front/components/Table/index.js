@@ -37,6 +37,10 @@ const overflow = { overflow: false };
 const background = { background: false };
 
 class TableComponent extends Component {
+  static propTypes = {
+    setPersonsToExport: PropTypes.func.isRequired,
+  };
+
   static contextTypes = {
     personDelete: PropTypes.func.isRequired,
     personUpdate: PropTypes.func.isRequired,
@@ -170,6 +174,13 @@ class TableComponent extends Component {
     });
   }
 
+  createExportFilter(sortedPersons) {
+    return selected => this.props.setPersonsToExport(
+      Array.isArray(selected) ?
+        selected.map(index => sortedPersons[index].id) : [],
+    );
+  }
+
   render() {
     const { personDelete } = this.context;
     const { tempFields } = this.state;
@@ -179,15 +190,22 @@ class TableComponent extends Component {
 
     const fields = Object.entries(this.fields);
 
+    const persons = this.getPersons();
+
+    const setPersonsToExport = this.createExportFilter(persons);
+
     return (
       <Paper>
         <Table
           bodyStyle={overflow}
           wrapperStyle={overflow}
           style={background}
-          selectable={false}
+          multiSelectable
+          onRowSelection={setPersonsToExport}
         >
-          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+          <TableHeader
+            displaySelectAll={false}
+          >
             <TableRow>
               {fields.map(
                 ([alias, { header }], index) => {
@@ -208,8 +226,8 @@ class TableComponent extends Component {
               <TableHeaderColumn />
             </TableRow>
           </TableHeader>
-          <TableBody displayRowCheckbox={false}>
-            {this.getPersons().map(
+          <TableBody>
+            {persons.map(
               ({ id, ...person }) => (
                 <TableRow key={`user${id}`}>
                   {fields.map(

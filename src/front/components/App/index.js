@@ -12,23 +12,43 @@ class App extends Component {
     ...Toolbar.contextTypes,
   };
 
-  static childContextTypes = { ...App.propTypes };
+  static childContextTypes = {
+    ...App.propTypes,
+    personsToExport: App.propTypes.persons,
+  };
 
   constructor(...args) {
     super(...args);
 
     this.state = {
+      personsToExport: [],
     };
+
+    this.setPersonsToExport = this.setPersonsToExport.bind(this);
   }
 
   getChildContext() {
-    return this.props;
+    const { personsToExport } = this.state;
+
+    return {
+      ...this.props,
+      personsToExport: personsToExport.length ?
+        personsToExport : this.props.persons,
+    };
+  }
+
+  setPersonsToExport(personsIds) {
+    this.setState({
+      personsToExport: this.props.persons.filter(
+        ({ id }) => personsIds.includes(id),
+      ),
+    });
   }
 
   render() {
     return (
       <div className={appClass}>
-        <Table />
+        <Table setPersonsToExport={this.setPersonsToExport} />
         <TableFillPanel />
         <Toolbar />
       </div>

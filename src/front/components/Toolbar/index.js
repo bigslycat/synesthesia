@@ -37,6 +37,21 @@ class Toolbar extends Component {
         email: PropTypes.string,
       }),
     ).isRequired,
+    personsToExport: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        fio: PropTypes.string,
+        age: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number,
+        ]),
+        phone: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number,
+        ]),
+        email: PropTypes.string,
+      }),
+    ).isRequired,
   };
 
   constructor(...args) {
@@ -63,7 +78,7 @@ class Toolbar extends Component {
   }
 
   getCsv() {
-    return this.context.persons.map(personToString).join('\n');
+    return this.context.personsToExport.map(personToString).join('\n');
   }
 
   render() {
