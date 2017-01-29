@@ -56,13 +56,59 @@ class TableComponent extends Component {
 
     this.state = {
       tempFields: {},
+      sorting: {
+        field: 'fio',
+        order: 1,
+      },
     };
   }
+
+  getPersons() {
+    const { field, order = 1 } = this.state.sorting;
+
+    if (!field) return this.context.persons;
+
+    const constructor = field === 'age' ? Number : (value = '') => String(value);
+    const persons = [...this.context.persons];
+
+    persons.sort(
+      (personA, personB) => {
+        const fieldA = constructor(personA[field]);
+        const fieldB = constructor(personB[field]);
+
+        if (fieldA === fieldB) return 0;
+        else if (fieldA > fieldB) return 1 * order;
+        return -1 * order;
+      },
+    );
+
+    return persons;
+  }
+
+  getPersonById(targetId) {
+    return this.context.persons.filter(({ id }) => (id === targetId))[0];
+  }
+
+  fields = {
+    fio: {
+      header: 'ФИО',
+    },
+    age: {
+      header: 'Возраст',
+      type: 'number',
+    },
+    phone: {
+      header: 'Телефон',
+    },
+    email: {
+      header: 'E-mail',
+    },
+  };
 
   edit(index) {
     this.setState({
       ...this.state,
-      tempFields: this.context.persons[index],
+      tempFields: this.getPersonById(index),
     });
   }
 
@@ -91,7 +137,7 @@ class TableComponent extends Component {
   }
 
   render() {
-    const { persons, personDelete } = this.context;
+    const { personDelete } = this.context;
     const { tempFields } = this.state;
 
     const fieldOnChange = (name, value) =>
@@ -99,6 +145,8 @@ class TableComponent extends Component {
 
     const cansel = () => this.cancel();
     const save = () => this.save();
+
+    const fields = Object.entries(this.fields);
 
     return (
       <Paper>
@@ -110,58 +158,34 @@ class TableComponent extends Component {
         >
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
-              <TableHeaderColumn>ФИО</TableHeaderColumn>
-              <TableHeaderColumn>Возраст</TableHeaderColumn>
-              <TableHeaderColumn>Телефон</TableHeaderColumn>
-              <TableHeaderColumn>E-mail</TableHeaderColumn>
+              {fields.map(
+                ([alias, { header }], index) =>
+                  <TableHeaderColumn
+                    key={`header-${alias}`}
+                    columnNumber={index}
+                  >{header}</TableHeaderColumn>,
+              )}
               <TableHeaderColumn />
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
-            {persons.map(
-              ({ id, fio, age, phone, email }, index) => (
+            {this.getPersons().map(
+              ({ id, ...person }) => (
                 <TableRow key={`user${id}`}>
-                  <TableRowColumn>
-                    <TableCell
-                      id={id}
-                      name="fio"
-                      value={fio}
-                      tempFields={tempFields}
-                      onChange={fieldOnChange}
-                      onEnter={save}
-                    />
-                  </TableRowColumn>
-                  <TableRowColumn>
-                    <TableCell
-                      id={id}
-                      type="number"
-                      name="age"
-                      value={age}
-                      tempFields={tempFields}
-                      onChange={fieldOnChange}
-                      onEnter={save}
-                    />
-                  </TableRowColumn>
-                  <TableRowColumn>
-                    <TableCell
-                      id={id}
-                      name="phone"
-                      value={phone}
-                      tempFields={tempFields}
-                      onChange={fieldOnChange}
-                      onEnter={save}
-                    />
-                  </TableRowColumn>
-                  <TableRowColumn>
-                    <TableCell
-                      id={id}
-                      name="email"
-                      value={email}
-                      tempFields={tempFields}
-                      onChange={fieldOnChange}
-                      onEnter={save}
-                    />
-                  </TableRowColumn>
+                  {fields.map(
+                    ([alias, { type = 'text' }]) =>
+                      <TableRowColumn key={`cell-${alias}-${id}`}>
+                        <TableCell
+                          id={id}
+                          type={type}
+                          name={alias}
+                          value={person[alias]}
+                          tempFields={tempFields}
+                          onChange={fieldOnChange}
+                          onEnter={save}
+                        />
+                      </TableRowColumn>,
+                  )}
                   <TableRowColumn style={tdResetStyle} className={deleteButtonCellClass}>
                     {id === tempFields.id ? (
                       <div>
@@ -182,7 +206,7 @@ class TableComponent extends Component {
                       <div>
                         <IconButton
                           tooltip="Редактировать"
-                          onClick={() => this.edit(index)}
+                          onClick={() => this.edit(id)}
                         >
                           <Create />
                         </IconButton>
