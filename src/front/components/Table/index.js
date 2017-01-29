@@ -68,6 +68,7 @@ class TableComponent extends Component {
       },
     };
 
+    this.fieldOnChange = this.fieldOnChange.bind(this);
     this.sortingChange = this.sortingChange.bind(this);
   }
 
@@ -173,9 +174,6 @@ class TableComponent extends Component {
     const { personDelete } = this.context;
     const { tempFields } = this.state;
 
-    const fieldOnChange = (name, value) =>
-      this.fieldOnChange(name, value);
-
     const cansel = () => this.cancel();
     const save = () => this.save();
 
@@ -223,7 +221,7 @@ class TableComponent extends Component {
                           name={alias}
                           value={person[alias]}
                           tempFields={tempFields}
-                          onChange={fieldOnChange}
+                          onChange={this.fieldOnChange}
                           onEnter={save}
                         />
                       </TableRowColumn>,
