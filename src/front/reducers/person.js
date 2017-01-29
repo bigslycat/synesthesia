@@ -1,6 +1,7 @@
 import { PERSON_CREATE } from '../actions/personCreate';
 import { PERSON_UPDATE } from '../actions/personUpdate';
 import { PERSON_DELETE } from '../actions/personDelete';
+import { PERSONS_LIST_UPDATE } from '../actions/personsListUpdate';
 
 const getInitialState = () => ({
   data: [{
@@ -16,7 +17,15 @@ const getInitialState = () => ({
 
 const person = (
   state = getInitialState(),
-  { id, type, fio, age, phone, email },
+  {
+    type,
+    persons = [],
+    id,
+    fio,
+    age,
+    phone,
+    email,
+  },
 ) => {
   switch (type) {
     case PERSON_CREATE: {
@@ -45,6 +54,29 @@ const person = (
       return {
         ...state,
         data: state.data.filter(user => user.id !== id),
+      };
+    }
+
+    case PERSONS_LIST_UPDATE: {
+      const firstId = state.idCounter + 1;
+
+      const newPersonsList = persons.map(({
+        fio: currentFio,
+        age: currentAge,
+        phone: currentPhone,
+        email: currentEmail,
+      }, index) => ({
+        id: firstId + index,
+        fio: currentFio,
+        age: currentAge,
+        phone: currentPhone,
+        email: currentEmail,
+      }));
+
+      return {
+        ...state,
+        data: newPersonsList,
+        idCounter: state.idCounter + newPersonsList.length,
       };
     }
 
