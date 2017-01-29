@@ -38,8 +38,14 @@ class TableComponent extends Component {
       PropTypes.shape({
         id: PropTypes.number.isRequired,
         fio: PropTypes.string,
-        age: PropTypes.number,
-        phone: PropTypes.string,
+        age: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number,
+        ]),
+        phone: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number,
+        ]),
         email: PropTypes.string,
       }),
     ).isRequired,
