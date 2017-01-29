@@ -51,7 +51,11 @@ class Toolbar extends Component {
         ]),
         email: PropTypes.string,
       }),
-    ).isRequired,
+    ),
+  };
+
+  static defaultProps = {
+    childContextTypes: [],
   };
 
   constructor(...args) {
