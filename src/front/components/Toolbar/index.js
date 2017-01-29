@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Card, CardText } from 'material-ui/Card';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
+import FileDownload from 'material-ui/svg-icons/file/file-download';
 import TextField from 'material-ui/TextField';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
@@ -8,6 +9,15 @@ import {
   toolbar as tollbarClass,
   codeField as codeFieldClass,
 } from './styles.less';
+
+const prepareValue = value => (
+  typeof value === 'string' && value.search(',') > -1 ?
+    `"${value}"` : value
+);
+
+const personToString = person => Object.values(person)
+  .map(prepareValue)
+  .join(',');
 
 class Toolbar extends Component {
   static propTypes = {
@@ -53,6 +63,10 @@ class Toolbar extends Component {
     }
   }
 
+  getCsv() {
+    return this.props.persons.map(personToString).join('\n');
+  }
+
   render() {
     return (
       <Card className={tollbarClass}>
@@ -73,6 +87,16 @@ class Toolbar extends Component {
                 value={this.state.json}
                 onChange={this.setJson}
               />
+            </CardText>
+          </Tab>
+          <Tab
+            label="CSV"
+            icon={<FileDownload />}
+          >
+            <CardText>
+              <pre>
+                {this.getCsv()}
+              </pre>
             </CardText>
           </Tab>
         </Tabs>
