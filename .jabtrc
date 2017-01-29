@@ -1,5 +1,6 @@
 {
-  "entry": "./src/front/index.js",
+  "context": "./src/front",
+  "entry": "./index.js",
   "path": "./build",
   "filename": "bundle.js",
   "tplPath": "./src/front/template.pug"
