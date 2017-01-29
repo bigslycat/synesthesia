@@ -3,17 +3,32 @@ import { PERSON_UPDATE } from '../actions/personUpdate';
 import { PERSON_DELETE } from '../actions/personDelete';
 import { PERSONS_LIST_UPDATE } from '../actions/personsListUpdate';
 
-const getInitialState = () => ({
-  data: [{
+const getInitialState = () => {
+  const data = [{
     id: 1,
     fio: 'Павел Терещенко',
     age: 29,
     phone: '+7904*****63',
     email: 'me@pavlik.pro',
-  }],
+  }, {
+    id: 2,
+    fio: 'Иван Петрович Сидоров',
+    age: 66,
+    phone: '',
+    email: 'sidorov.ip@example.com',
+  }, {
+    id: 3,
+    fio: 'Ололоша Ололоев',
+    age: 14,
+    phone: '',
+    email: 'ololosha@example.com',
+  }];
 
-  idCounter: 1,
-});
+  return {
+    data,
+    idCounter: data.length,
+  };
+};
 
 const person = (
   state = getInitialState(),

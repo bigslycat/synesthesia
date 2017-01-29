@@ -1,10 +1,16 @@
 import React, { Component, PropTypes } from 'react';
+
 import Paper from 'material-ui/Paper';
+import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
-import Create from 'material-ui/svg-icons/content/create';
-import Clear from 'material-ui/svg-icons/content/clear';
-import Done from 'material-ui/svg-icons/action/done';
+
+import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down';
+import ArrowDropUp from 'material-ui/svg-icons/navigation/arrow-drop-up';
 import Cancel from 'material-ui/svg-icons/navigation/cancel';
+import Clear from 'material-ui/svg-icons/content/clear';
+import Create from 'material-ui/svg-icons/content/create';
+import Done from 'material-ui/svg-icons/action/done';
+import Sort from 'material-ui/svg-icons/content/sort';
 
 import {
   Table,
@@ -57,14 +63,16 @@ class TableComponent extends Component {
     this.state = {
       tempFields: {},
       sorting: {
-        field: 'fio',
-        order: 1,
+        field: null,
+        order: 0,
       },
     };
+
+    this.sortingChange = this.sortingChange.bind(this);
   }
 
   getPersons() {
-    const { field, order = 1 } = this.state.sorting;
+    const { field, order } = this.state.sorting;
 
     if (!field) return this.context.persons;
 
@@ -76,7 +84,7 @@ class TableComponent extends Component {
         const fieldA = constructor(personA[field]);
         const fieldB = constructor(personB[field]);
 
-        if (fieldA === fieldB) return 0;
+        if (!order || fieldA === fieldB) return 0;
         else if (fieldA > fieldB) return 1 * order;
         return -1 * order;
       },
@@ -87,6 +95,22 @@ class TableComponent extends Component {
 
   getPersonById(targetId) {
     return this.context.persons.filter(({ id }) => (id === targetId))[0];
+  }
+
+  getSortIcon(alias) {
+    const { sorting: { field, order } } = this.state;
+
+    if (field !== alias || !order) return Sort;
+    else if (order < 0) return ArrowDropUp;
+    return ArrowDropDown;
+  }
+
+  getNextOrder(nextField) {
+    const { field, order } = this.state.sorting;
+
+    if (field !== nextField) return 1;
+    else if (order <= 0) return order + 1;
+    return -1;
   }
 
   fields = {
@@ -104,6 +128,15 @@ class TableComponent extends Component {
       header: 'E-mail',
     },
   };
+
+  sortingChange({ target: { name: field } }) {
+    this.setState({
+      sorting: {
+        field,
+        order: this.getNextOrder(field),
+      },
+    });
+  }
 
   edit(index) {
     this.setState({
@@ -159,11 +192,20 @@ class TableComponent extends Component {
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
               {fields.map(
-                ([alias, { header }], index) =>
-                  <TableHeaderColumn
-                    key={`header-${alias}`}
-                    columnNumber={index}
-                  >{header}</TableHeaderColumn>,
+                ([alias, { header }], index) => {
+                  const Icon = this.getSortIcon(alias);
+
+                  return (
+                    <TableHeaderColumn key={`header-${alias}`} columnNumber={index} >
+                      <FlatButton
+                        name={alias}
+                        label={header}
+                        icon={<Icon />}
+                        onClick={this.sortingChange}
+                      />
+                    </TableHeaderColumn>
+                  );
+                },
               )}
               <TableHeaderColumn />
             </TableRow>
