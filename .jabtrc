@@ -1,7 +1,7 @@
 {
   "context": "./src/front",
   "entry": "./index.js",
-  "path": "./build",
+  "path": "./docs",
   "filename": "bundle.js",
   "tplPath": "./src/front/template.pug"
 }
